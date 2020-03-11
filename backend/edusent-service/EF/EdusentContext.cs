@@ -12,6 +12,12 @@ namespace edusent_service.EF
     public class EdusentContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<User> User { get; set; }
+        public DbSet<Session> Sessions { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
+
 
         public EdusentContext()
         {
