@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.Linq.Expressions;
 
-namespace sXb_service.Repos.Base
+namespace edusent_service.Repos.Base
 {
     public abstract class BaseRepo<T> : IRepo<T> where T : class
     {
