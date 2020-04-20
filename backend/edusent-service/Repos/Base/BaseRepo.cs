@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using edusent_service.EF;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections;
 using System.Linq.Expressions;
+using edusent_service.Models;
+using edusent_service.EF;
 
 namespace edusent_service.Repos.Base
 {
@@ -56,7 +58,10 @@ namespace edusent_service.Repos.Base
 
         public IEnumerable<T> GetAll(Expression<Func<T, Boolean>> function) => Include(table).Where(function);
 
-        public IEnumerable<T> GetAll() => Include(table);
+        public IEnumerable<T> GetAll()
+        {
+            return Include(table);
+        }
 
         public async Task<T> Remove(Expression<Func<T, Boolean>> function)
         {

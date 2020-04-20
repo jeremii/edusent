@@ -7,7 +7,7 @@ namespace edusent_service.Models
     public abstract class EntityBase
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Timestamp]
         public byte[] TimeStamp { get; set; }

@@ -8,16 +8,16 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace edusent_service.Models
 {
-    [Table("Teachers", Schema ="edusent")]
-    public class Teacher : User
-    {
-        public Int64 MoneyMade { get; set; }
+    //[Table("Teachers", Schema ="edusent")]
+    //public class Teacher : User
+    //{
+    //    //public Int64 MoneyMade { get; set; }
 
-        [InverseProperty(nameof(Subject.Teacher))]
-        public List<Subject> Subjects { get; set; } = new List<Subject>();
+    //    //[InverseProperty(nameof(Subject.Teacher))]
+    //    //public List<Subject> Subjects { get; set; } = new List<Subject>();
 
-        [InverseProperty(nameof(Session.Teacher))]
-        public List<Session> Sessions { get; set; } = new List<Session>();
+    //    //[InverseProperty(nameof(Session.Teacher))]
+    //    //public List<Session> Sessions { get; set; } = new List<Session>();
 
-    }
+    //}
 }

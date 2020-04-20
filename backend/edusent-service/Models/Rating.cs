@@ -9,14 +9,7 @@ namespace edusent_service.Models
     public class Rating : EntityBase
     {
         [Required]
-        public string RateForId { get; set; }
-        [ForeignKey(nameof(RateForId))]
-        public User RateFor { get; set; }
-
-        [Required]
-        public string RateById { get; set; }
-        [ForeignKey(nameof(RateById))]
-        public User RateBy { get; set; }
+        public bool RateForTeacher { get; set; }
 
         [Required]
         public string SessionId { get; set; }
@@ -32,6 +25,7 @@ namespace edusent_service.Models
     }
     public enum Reason
     {
+        None,
         Late,
         Poor_communication,
         Unprofessional,

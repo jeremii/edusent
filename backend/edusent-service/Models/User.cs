@@ -12,6 +12,12 @@ namespace edusent_service.Models
     [Table("Users", Schema = "edusent")]
     public class User : IdentityUser
     {
+        //public virtual ICollection<UserClaim> Claims { get; set; }
+        //public virtual ICollection<UserLogin> Logins { get; set; }
+        //public virtual ICollection<UserToken> Tokens { get; set; }
+        //public virtual ICollection<UserRole> UserRoles { get; set; }
+
+
         [DataType(DataType.Text), MaxLength(128)]
         public string FirstName { get; set; }
 
@@ -21,10 +27,18 @@ namespace edusent_service.Models
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
 
-        [InverseProperty(nameof(Rating.RateFor))]
-        public List<Rating> RateFors { get; set; } = new List<Rating>();
+        
+        public bool isTeacher { get; set; }
 
-        [InverseProperty(nameof(Rating.RateBy))]
-        public List<Rating> RateBys { get; set; } = new List<Rating>();
+        public double MoneyMade { get; set; }
+
+        [InverseProperty(nameof(Subject.User))]
+        public List<Subject> Subjects { get; set; } = new List<Subject>();
+
+        //[InverseProperty(nameof(Rating.RateFor))]
+        //public List<Rating> RateFors { get; set; } = new List<Rating>();
+
+        //[InverseProperty(nameof(Rating.RateBy))]
+        //public List<Rating> RateBys { get; set; } = new List<Rating>();
     }
 }

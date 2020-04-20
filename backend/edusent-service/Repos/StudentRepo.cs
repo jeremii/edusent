@@ -6,10 +6,11 @@ using System.Linq;
 
 namespace edusent_service.Repos
 {
-    public class StudentRepo : BaseRepo<Student>, IStudentRepo
-    {
-        public StudentRepo(DbContextOptions options) : base(options) { }
+    //public class StudentRepo : BaseRepo<Student>, IStudentRepo
+    //{
+    //    public StudentRepo(DbContextOptions options) : base(options) { }
 
-        protected override IQueryable<Student> Include(DbSet<Student> set) => set.Include(x => x.Sessions);
-    }
+    //    //protected override IQueryable<Student> Include(DbSet<Student> set) => set.Include(x => x.Sessions);
+    //    protected override IQueryable<Student> Include(DbSet<Student> set) => set;
+    //}
 }

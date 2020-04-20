@@ -40,10 +40,11 @@ namespace edusent_service.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAll()
         {
-            IEnumerable<User> data = Repo.GetAll();
-            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
+            IEnumerable<User> data = await Repo.GetAll();
+            return Json(data);
         }
 
         [Authorize]
@@ -57,7 +58,12 @@ namespace edusent_service.Controllers
             }
             return Json(item);
         }
-
+        [HttpGet("find/{name}")]
+        public async Task<IEnumerable<User>> FindUser(string name)
+        {
+            IEnumerable<User> data = await FindUser(name);
+            return data;
+        }
 
         [HttpGet("info")]
         public async Task<IActionResult> GetUserInfo()
@@ -173,5 +179,4 @@ namespace edusent_service.Controllers
             return BadRequest();
         }
     }
-}
 }

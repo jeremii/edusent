@@ -15,13 +15,12 @@ namespace edusent_service.Models
         [Required]
         public string StudentId { get; set; }
         [ForeignKey(nameof(StudentId))]
-        public Student Student { get; set; }
+        public User Student { get; set; }
 
         // Assigned Teacher
-        [Required]
         public string TeacherId { get; set; }
         [ForeignKey(nameof(TeacherId))]
-        public Teacher Teacher { get; set; }
+        public User Teacher { get; set; }
 
         [InverseProperty(nameof(Rating.Session))]
         public List<Rating> Ratings { get; set; } = new List<Rating>();

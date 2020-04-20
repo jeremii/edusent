@@ -22,5 +22,8 @@ namespace edusent_service.Repos.Base
         Task<T> Remove(Expression<Func<T, Boolean>> function);
 
         Task<IEnumerable<T>> RemoveAll(Expression<Func<T, Boolean>> function);
+
+
+
     }
 }

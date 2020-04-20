@@ -7,9 +7,8 @@ namespace edusent_service.Repos.Interfaces
 {
     public interface ISessionRepo : IRepo<Session>
     {
-        Task<SessionStatus> GetStatus(string id);
-        Task<int> SetStatus(string id, SessionStatus status, bool persist = true);
-        
+
         Task<IEnumerable<Session>> GetAllByUserId(string userId);
+
     };
 }

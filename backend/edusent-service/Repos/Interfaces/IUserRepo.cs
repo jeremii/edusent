@@ -8,7 +8,7 @@ namespace edusent_service.Repos.Interfaces
 {
     public interface IUserRepo
     {
-        IEnumerable<User> GetAll();
+        Task<IEnumerable<User>> GetAll();
         Task<User> Get(string id);
         Task<IEnumerable<User>> FindUsers(string keyword);
         Task<int> Update(User user, bool persists = true);

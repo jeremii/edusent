@@ -8,9 +8,9 @@ namespace edusent_service.Models
     {
         
         [Required]
-        public string TeacherId { get; set; }
-        [ForeignKey(nameof(TeacherId))]
-        public Teacher Teacher { get; set; }
+        public string UserId { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public User User { get; set; }
 
         [DataType(DataType.Text), MaxLength(128)]
         public string Name { get; set; }

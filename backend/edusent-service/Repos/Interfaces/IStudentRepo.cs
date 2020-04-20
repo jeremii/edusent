@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace edusent_service.Repos.Interfaces
 {
-    public interface IStudentRepo : IRepo<Student>
-    {
+    //public interface IStudentRepo : IRepo<Student>
+    //{
         
-    }
+    //}
 }
