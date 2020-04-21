@@ -37,7 +37,7 @@ namespace edusent_service
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IHostingEnvironment env)
         {
             
             var databaseConfig = Configuration.GetSection("Db").Get<DatabaseConfig>();
@@ -64,14 +64,21 @@ namespace edusent_service
                 c.BaseAddress = new Uri(Configuration["Google:Uri"]);
             });
 
-            services.AddDbContext<EdusentContext>(options =>
-              options.UseSqlServer(databaseConfig.Connection));
+            
 
             // Use SQL Database if in Azure, otherwise, use SQLite
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
             {
+                services.AddDbContext<EdusentContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("azure_connection_string")));
                 // Automatically perform database migration
                 services.BuildServiceProvider().GetService<EdusentContext>().Database.Migrate();
+            }
+
+            if( env.IsDevelopment() )
+            {
+                services.AddDbContext<EdusentContext>(options =>
+                    options.UseSqlServer(databaseConfig.Connection));
             }
 
             services.AddDefaultIdentity<User>()
@@ -137,7 +144,7 @@ namespace edusent_service
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, EdusentContext context)
         {
-            if (env.IsDevelopment() || true)
+            if (env.IsDevelopment() )
             {
                 DbInitializer.InitializeData(context);
                 app.UseDeveloperExceptionPage();
