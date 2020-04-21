@@ -39,31 +39,10 @@ namespace edusent_service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            var databaseConfig = Configuration.GetSection("Db").Get<DatabaseConfig>();
-            
-            var corsConfig = Configuration.GetSection("Cors").Get<CorsConfig>();
 
             
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy(AllowAnywhere,
-                    builder =>
-                    {
-                        builder.WithOrigins(corsConfig.AllDomains)
-                            .AllowAnyHeader()
-                            .WithExposedHeaders("*")
-                            .AllowCredentials()
-                            .AllowAnyMethod();
-                    });
-            });
-
-            services.AddHttpClient("findCalendar", c =>
-            {
-                c.BaseAddress = new Uri(Configuration["Google:Uri"]);
-            });
-
+            
             
 
             // Use SQL Database if in Azure, otherwise, use SQLite
@@ -76,6 +55,30 @@ namespace edusent_service
             }
             else
             {
+                var corsConfig = Configuration.GetSection("Cors").Get<CorsConfig>();
+
+
+
+                services.AddCors(options =>
+                {
+                    options.AddPolicy(AllowAnywhere,
+                        builder =>
+                        {
+                            builder.WithOrigins(corsConfig.AllDomains)
+                                .AllowAnyHeader()
+                                .WithExposedHeaders("*")
+                                .AllowCredentials()
+                                .AllowAnyMethod();
+                        });
+                });
+
+                services.AddHttpClient("findCalendar", c =>
+                {
+                    c.BaseAddress = new Uri(Configuration["Google:Uri"]);
+                });
+
+
+                var databaseConfig = Configuration.GetSection("Db").Get<DatabaseConfig>();
                 services.AddDbContext<EdusentContext>(options =>
                     options.UseSqlServer(databaseConfig.Connection));
             }
