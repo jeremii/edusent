@@ -29,9 +29,6 @@ jobs:
       working-directory: ./backend/edusent-service
       run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
-    - name: Azure Login
-      uses: Azure/login@v1
-
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v1
       with:
