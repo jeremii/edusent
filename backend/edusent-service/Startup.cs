@@ -40,24 +40,15 @@ namespace edusent_service
         public void ConfigureServices(IServiceCollection services)
         {
 
-            
-
-            
-            
-
             // Use SQL Database if in Azure, otherwise, use SQLite
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
             {
                 services.AddDbContext<EdusentContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("azure_connection_string")));
-                // Automatically perform database migration
-                services.BuildServiceProvider().GetService<EdusentContext>().Database.Migrate();
+                    options.UseSqlServer(Configuration.GetConnectionString("azure_connection_string")));   
             }
             else
             {
                 var corsConfig = Configuration.GetSection("Cors").Get<CorsConfig>();
-
-
 
                 services.AddCors(options =>
                 {
@@ -82,6 +73,9 @@ namespace edusent_service
                 services.AddDbContext<EdusentContext>(options =>
                     options.UseSqlServer(databaseConfig.Connection));
             }
+
+            // Automatically perform database migration
+            services.BuildServiceProvider().GetService<EdusentContext>().Database.Migrate();
 
             services.AddDefaultIdentity<User>()
             .AddEntityFrameworkStores<EdusentContext>()
@@ -162,7 +156,7 @@ namespace edusent_service
 
             
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseCors(AllowAnywhere);
 

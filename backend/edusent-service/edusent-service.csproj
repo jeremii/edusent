@@ -7,9 +7,10 @@
         <UserSecretsId>abe1c2bb-6158-4a25-b231-4e239f143b58</UserSecretsId>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.App">
-            <PrivateAssets Condition="'%(PackageReference.Version)' == ''">all</PrivateAssets>
+        <PackageReference Include="Microsoft.AspNetCore.App" Version="$(AspNetCoreAppRuntimeFrameworkVersion)">
+            <PrivateAssets Condition="'%(PackageReference.Version)' == ''">All</PrivateAssets>
             <Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>
+            <IsImplicitlyDefined>true</IsImplicitlyDefined>
         </PackageReference>
         <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
         <PackageReference Include="AutoMapper" Version="9.0.0" />
