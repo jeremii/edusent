@@ -16,7 +16,7 @@ using edusent_service.Repos.Interfaces;
 
 namespace edusent_service.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UsersController : Controller
     {
