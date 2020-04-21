@@ -1,0 +1,1 @@
+﻿INSERT INTO [edusent].[Ratings] ([Id],[RateForTeacher],[SessionId], [Stars], [Reason]) VALUES ('2112',1, '1000', 5, 1 ); 
