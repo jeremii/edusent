@@ -1,0 +1,6 @@
+{
+  "projects": [ "edusent-service" ],
+  "sdk": {
+    "version": "2.1.804"
+  }
+}
