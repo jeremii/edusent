@@ -34,5 +34,5 @@ jobs:
       with:
         app-name: 'edusent-api'
         slot-name: 'production'
-        publish-profile: ${{ secrets.EDUSENT_API_PUBLISH_PROFILE  }}
+        publish-profile: ${{ secrets.PUBLISH_PROFILE  }}
         package: ${{env.DOTNET_ROOT}}/myapp 
