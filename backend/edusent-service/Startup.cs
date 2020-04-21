@@ -151,13 +151,12 @@ namespace edusent_service
             }
             else
             {
-                DbInitializer.InitializeData(context);
                 app.UseHsts();
             }
 
             
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseCors(AllowAnywhere);
 
