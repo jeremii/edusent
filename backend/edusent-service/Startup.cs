@@ -151,6 +151,7 @@ namespace edusent_service
             }
             else
             {
+                DbInitializer.InitializeData(context);
                 app.UseHsts();
             }
 
