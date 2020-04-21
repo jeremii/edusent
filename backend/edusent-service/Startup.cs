@@ -64,23 +64,15 @@ namespace edusent_service
                 c.BaseAddress = new Uri(Configuration["Google:Uri"]);
             });
 
+            services.AddDbContext<EdusentContext>(options =>
+              options.UseSqlServer(databaseConfig.Connection));
 
             // Use SQL Database if in Azure, otherwise, use SQLite
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
             {
-
-                services.AddDbContext<EdusentContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("azure_connection_string")));
                 // Automatically perform database migration
                 services.BuildServiceProvider().GetService<EdusentContext>().Database.Migrate();
             }
-            else
-            {
-                services.AddDbContext<EdusentContext>(options =>
-               options.UseSqlServer(databaseConfig.Connection));
-            }
-
-
 
             services.AddDefaultIdentity<User>()
             .AddEntityFrameworkStores<EdusentContext>()
