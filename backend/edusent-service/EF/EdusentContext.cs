@@ -25,11 +25,11 @@ namespace edusent_service.EF
         {
             
         }
-        public EdusentContext(DbContextOptions<EdusentContext> options ) : base(options)
-        {
-            var conn = (System.Data.SqlClient.SqlConnection)Database.GetDbConnection();
-            conn.AccessToken = (new Microsoft.Azure.Services.AppAuthentication.AzureServiceTokenProvider()).GetAccessTokenAsync("https://database.windows.net/").Result;
-        }
+        //public EdusentContext(DbContextOptions<EdusentContext> options ) : base(options)
+        //{
+        //    var conn = (System.Data.SqlClient.SqlConnection)Database.GetDbConnection();
+        //    conn.AccessToken = (new Microsoft.Azure.Services.AppAuthentication.AzureServiceTokenProvider()).GetAccessTokenAsync("https://database.windows.net/").Result;
+        //}
         public EdusentContext(DbContextOptions options) : base(options)
         {
             
