@@ -26,6 +26,7 @@ jobs:
         
 
     - name: dotnet publish
+      working-directory: ./backend/edusent-service
       run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
     - name: Deploy to Azure Web App
@@ -33,5 +34,5 @@ jobs:
       with:
         app-name: 'edusent-api'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_ad147800688e41e08c0b28eed603edf3 }}
+        publish-profile: ${{ secrets.EDUSENT_API_PUBLISH_PROFILE  }}
         package: ${{env.DOTNET_ROOT}}/myapp 
