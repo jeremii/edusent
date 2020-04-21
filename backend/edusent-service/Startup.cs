@@ -144,11 +144,9 @@ namespace edusent_service
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, EdusentContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, EdusentContext context)
         {
-            loggerFactory.AddConsole();
-            loggerFactory.AddDebug();
-
+            
             if (env.IsDevelopment() )
             {
                 DbInitializer.InitializeData(context);
@@ -159,12 +157,12 @@ namespace edusent_service
             }
             else
             {
-                //app.UseHsts();
+                app.UseHsts();
             }
 
             
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseCors(AllowAnywhere);
 
