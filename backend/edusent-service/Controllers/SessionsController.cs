@@ -66,5 +66,10 @@ namespace edusent_service.Controllers
             return Created("Get", new { id = model.Id });
         }
         //[HttpPut("{id}")]
+        public async Task<IActionResult> Update(Session model)
+        {
+            var data = await Repo.Update(model);
+            return data == null ? (IActionResult) NotFound() : (IActionResult) Created("Get", new { id = model.Id });
+        }
     }
 }
