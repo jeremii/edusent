@@ -37,7 +37,7 @@ namespace edusent_service
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services, IHostingEnvironment env)
+        public void ConfigureServices(IServiceCollection services)
         {
             
             var databaseConfig = Configuration.GetSection("Db").Get<DatabaseConfig>();
@@ -74,8 +74,7 @@ namespace edusent_service
                 // Automatically perform database migration
                 services.BuildServiceProvider().GetService<EdusentContext>().Database.Migrate();
             }
-
-            if( env.IsDevelopment() )
+            else
             {
                 services.AddDbContext<EdusentContext>(options =>
                     options.UseSqlServer(databaseConfig.Connection));
