@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Microsoft.Azure.Services.AppAuthentication;
+
+
 namespace edusent_service.EF
 {
     public class EdusentContext : IdentityDbContext<IdentityUser>
@@ -23,10 +26,16 @@ namespace edusent_service.EF
         public EdusentContext()
         {
 
+            
         }
-
+        //public EdusentContext(DbContextOptions<EdusentContext> options ) : base(options)
+        //{
+        //    var conn = (System.Data.SqlClient.SqlConnection)Database.GetDbConnection();
+        //    conn.AccessToken = (new Microsoft.Azure.Services.AppAuthentication.AzureServiceTokenProvider()).GetAccessTokenAsync("https://database.windows.net/").Result;
+        //}
         public EdusentContext(DbContextOptions options) : base(options)
         {
+            
             try
             {
                 Database.Migrate();

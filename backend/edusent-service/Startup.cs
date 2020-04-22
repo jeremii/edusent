@@ -39,30 +39,6 @@ namespace edusent_service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            var databaseConfig = Configuration.GetSection("Db").Get<DatabaseConfig>();
-            
-            var corsConfig = Configuration.GetSection("Cors").Get<CorsConfig>();
-
-            
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy(AllowAnywhere,
-                    builder =>
-                    {
-                        builder.WithOrigins(corsConfig.AllDomains)
-                            .AllowAnyHeader()
-                            .WithExposedHeaders("*")
-                            .AllowCredentials()
-                            .AllowAnyMethod();
-                    });
-            });
-
-            services.AddHttpClient("findCalendar", c =>
-            {
-                c.BaseAddress = new Uri(Configuration["Google:Uri"]);
-            });
 
 
             // Use SQL Database if in Azure, otherwise, use SQLite
@@ -70,17 +46,38 @@ namespace edusent_service
             {
 
                 services.AddDbContext<EdusentContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("azure_connection_string")));
-                // Automatically perform database migration
-                services.BuildServiceProvider().GetService<EdusentContext>().Database.Migrate();
+                    options.UseSqlServer(Configuration.GetConnectionString("azure_connection_string")));   
             }
             else
             {
+                var corsConfig = Configuration.GetSection("Cors").Get<CorsConfig>();
+
+                services.AddCors(options =>
+                {
+                    options.AddPolicy(AllowAnywhere,
+                        builder =>
+                        {
+                            builder.WithOrigins(corsConfig.AllDomains)
+                                .AllowAnyHeader()
+                                .WithExposedHeaders("*")
+                                .AllowCredentials()
+                                .AllowAnyMethod();
+                        });
+                });
+
+                services.AddHttpClient("findCalendar", c =>
+                {
+                    c.BaseAddress = new Uri(Configuration["Google:Uri"]);
+                });
+
+
+                var databaseConfig = Configuration.GetSection("Db").Get<DatabaseConfig>();
                 services.AddDbContext<EdusentContext>(options =>
-               options.UseSqlServer(databaseConfig.Connection));
+                    options.UseSqlServer(databaseConfig.Connection));
             }
 
-
+            // Automatically perform database migration
+            services.BuildServiceProvider().GetService<EdusentContext>().Database.Migrate();
 
             services.AddDefaultIdentity<User>()
             .AddEntityFrameworkStores<EdusentContext>()
@@ -139,13 +136,15 @@ namespace edusent_service
             });
 
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, EdusentContext context)
         {
-            if (env.IsDevelopment() || true)
+
+            
+            if (env.IsDevelopment() )
             {
                 DbInitializer.InitializeData(context);
                 app.UseDeveloperExceptionPage();
