@@ -20,7 +20,6 @@ namespace edusent_service.Controllers
 {
 
     [Route("[controller]")]
-
     public class SessionsController : Controller
     {
         private ISessionRepo Repo { get; set; }
