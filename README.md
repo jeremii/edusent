@@ -3,7 +3,7 @@
 
 
 ##### Stack
-- .NET Core 2.1
+- .NET Core
 - SQL Server
 - Angular
 - Azure
