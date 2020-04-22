@@ -22,11 +22,10 @@ namespace edusent_service.Controllers
     public class RatingsController : Controller
     {
         private IRatingRepo Repo { get; set; }
-
         
         public RatingsController(IRatingRepo repo)
         {
-            Repo = repo;   
+            Repo = repo;
         }
 
         [HttpGet]
@@ -43,18 +42,34 @@ namespace edusent_service.Controllers
 
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Create( Rating model)
+        [HttpPost("teacher/{sessionId}/{rate}/{reason}")]
+        public async Task<IActionResult> RateTeacher(string sessionId, string rate, string reason)
         {
-            await Repo.Create(model);
-
-            return Created("Get", new { id = model.Id });
+            Rating rating = new Rating
+            {
+                RateForTeacher = true,
+                SessionId = sessionId,
+                Stars = Byte.Parse(rate),
+                Reason = (Reason)int.Parse(reason)
+            };
+            var data = await Repo.Create(rating);
+            return data == null ? (IActionResult)BadRequest() : new ObjectResult(data);
         }
-        
-        
-        //Task<IEnumerable<Session>> GetAllByUserId(string userId);
+        [HttpPost("student/{sessionId}/{rate}/{reason}")]
+        public async Task<IActionResult> RateStudent(string sessionId, string rate, string reason)
+        {
+            Rating rating = new Rating
+            {
+                RateForTeacher = false,
+                SessionId = sessionId,
+                Stars = Byte.Parse(rate),
+                Reason = (Reason)int.Parse(reason)
+            };
+            var data = await Repo.Create(rating);
+            return data == null ? (IActionResult)BadRequest() : new ObjectResult(data);
+        }
 
+        
         
     }
 }
