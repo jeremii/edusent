@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 
 
 namespace edusent_service.Controllers
-
+{
     [Route("[controller]")]
     public class RatingsController : Controller
     {
