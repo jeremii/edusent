@@ -20,12 +20,12 @@ namespace edusent_service.Controllers
 {
 
     [Route("[controller]")]
-    public class SessionsController : Controller
+    public class SubjectsController : Controller
     {
-        private ISessionRepo Repo { get; set; }
+        private ISubjectRepo Repo { get; set; }
 
         
-        public SessionsController(ISessionRepo repo)
+        public SubjectsController(ISubjectRepo repo)
 
         {
             Repo = repo;
@@ -39,19 +39,6 @@ namespace edusent_service.Controllers
 
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
-        [HttpGet("student/{userId}")]
-        public IActionResult GetAllSessionAsStudent(string userId)
-        {
-            var data = Repo.Find(x => x.StudentId == userId);
-            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
-        }
-        [HttpGet("teacher/{userId}")]
-        public IActionResult GetAllSessionAsTeacher(string userId)
-        {
-            var data = Repo.Find(x => x.TeacherId == userId);
-            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
-        }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> Get( string id )
         {
@@ -61,7 +48,7 @@ namespace edusent_service.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, Session model)
+        public async Task<IActionResult> Update(string id, Subject model)
         {
             var data = await Repo.Update(model);
             return data == null ? (IActionResult) NotFound() : (IActionResult) Created("Get", new { id = model.Id });
@@ -69,12 +56,12 @@ namespace edusent_service.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete (string id )
         {
-            Session data = await Repo.Remove(x => x.Id == id);
+            Subject data = await Repo.Remove(x => x.Id == id);
 
             return data == null ? (IActionResult)NotFound() : Ok();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(Session model)
+        public async Task<IActionResult> Create(Subject model)
         {
             await Repo.Create(model);
 
