@@ -5,5 +5,4 @@
 ##### Stack
 - .NET Core 2.1
 - SQL Server
-- Angular
 - Azure
