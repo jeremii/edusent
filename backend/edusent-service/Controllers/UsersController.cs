@@ -18,7 +18,6 @@ namespace edusent_service.Controllers
 {
 
     [Route("[controller]")]
-    [ApiController]
     public class UsersController : Controller
     {
 
@@ -44,26 +43,22 @@ namespace edusent_service.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
-            IEnumerable<User> data = await Repo.GetAll();
-            return Json(data);
+            var data = await Repo.GetAll();
+            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
 
         [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(string id)
         {
-            User item = await Repo.Get(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-            return Json(item);
+            var data = await Repo.Get(id);
+            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
         [HttpGet("find/{name}")]
-        public async Task<IEnumerable<User>> FindUser(string name)
+        public async Task<IActionResult> FindUser(string name)
         {
-            IEnumerable<User> data = await FindUser(name);
-            return data;
+            var data = await Repo.FindUsers(name);
+            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
 
         [HttpGet("info")]
@@ -115,7 +110,7 @@ namespace edusent_service.Controllers
                 var corsConfig = Configuration.GetSection("Cors").Get<CorsConfig>();
                 string frontendUrl = corsConfig.FrontendDomain;
 
-                return Created($"api/users/{user.Id}", new { Id = user.Id });
+                return Created($"users/{user.Id}", new { Id = user.Id });
             }
             else
             {
