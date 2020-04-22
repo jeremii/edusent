@@ -38,7 +38,11 @@ namespace edusent_service
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
+
         {
+            
+            
+
 
             // Use SQL Database if in Azure, otherwise, use SQLite
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
@@ -76,6 +80,9 @@ namespace edusent_service
 
             // Automatically perform database migration
             services.BuildServiceProvider().GetService<EdusentContext>().Database.Migrate();
+            
+
+
 
             services.AddDefaultIdentity<User>()
             .AddEntityFrameworkStores<EdusentContext>()
@@ -135,12 +142,12 @@ namespace edusent_service
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, EdusentContext context)
         {
-            
             if (env.IsDevelopment() )
             {
                 DbInitializer.InitializeData(context);
