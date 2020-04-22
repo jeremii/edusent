@@ -27,11 +27,6 @@ namespace edusent_service.EF
         {
             
         }
-        //public EdusentContext(DbContextOptions<EdusentContext> options ) : base(options)
-        //{
-        //    var conn = (System.Data.SqlClient.SqlConnection)Database.GetDbConnection();
-        //    conn.AccessToken = (new Microsoft.Azure.Services.AppAuthentication.AzureServiceTokenProvider()).GetAccessTokenAsync("https://database.windows.net/").Result;
-        //}
         public EdusentContext(DbContextOptions options) : base(options)
         {
             
@@ -54,48 +49,6 @@ namespace edusent_service.EF
         {
 
             base.OnModelCreating(modelBuilder);
-
-            //modelBuilder.Entity<User>(b =>
-            //{
-            //    // Each User can have many UserClaims
-            //    b.HasMany(e => e.Claims)
-            //        .WithOne(e => e.User)
-            //        .HasForeignKey(uc => uc.UserId)
-            //        .IsRequired();
-
-            //    // Each User can have many UserLogins
-            //    b.HasMany(e => e.Logins)
-            //        .WithOne(e => e.User)
-            //        .HasForeignKey(ul => ul.UserId)
-            //        .IsRequired();
-
-            //    // Each User can have many UserTokens
-            //    b.HasMany(e => e.Tokens)
-            //        .WithOne(e => e.User)
-            //        .HasForeignKey(ut => ut.UserId)
-            //        .IsRequired();
-
-            //    // Each User can have many entries in the UserRole join table
-            //    b.HasMany(e => e.UserRoles)
-            //        .WithOne(e => e.User)
-            //        .HasForeignKey(ur => ur.UserId)
-            //        .IsRequired();
-            //});
-
-            //modelBuilder.Entity<Role>(b =>
-            //{
-            //    // Each Role can have many entries in the UserRole join table
-            //    b.HasMany(e => e.UserRoles)
-            //        .WithOne(e => e.Role)
-            //        .HasForeignKey(ur => ur.RoleId)
-            //        .IsRequired();
-
-            //    // Each Role can have many associated RoleClaims
-            //    b.HasMany(e => e.RoleClaims)
-            //        .WithOne(e => e.Role)
-            //        .HasForeignKey(rc => rc.RoleId)
-            //        .IsRequired();
-            //});
         }
     }
 }

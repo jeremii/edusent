@@ -72,7 +72,7 @@ namespace edusent_service.Repos
             return users;
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public IEnumerable<User> GetAll()
         {
             IEnumerable<User> results = Table.OrderBy(x => x.LastName);
             return results;

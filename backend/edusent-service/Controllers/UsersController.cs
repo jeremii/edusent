@@ -39,11 +39,10 @@ namespace edusent_service.Controllers
             _iMapper = iMapper;
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("all")]
+        public IActionResult GetAll()
         {
-            var data = await Repo.GetAll();
+            IEnumerable<User> data = Repo.GetAll();
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
 
@@ -74,8 +73,8 @@ namespace edusent_service.Controllers
             return Ok(userInfo);
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterViewModel newUser)
+        [HttpPost("signup")]
+        public async Task<IActionResult> SignUp([FromBody] RegisterViewModel newUser)
         {
 
             User user = new User();
@@ -86,9 +85,14 @@ namespace edusent_service.Controllers
             }
 
             if (newUser.Email != null)
+            {
                 user.Email = newUser.Email;
+                user.UserName = newUser.Email;
+            }
             else
+            {
                 return BadRequest();
+            }
 
             if (!Regex.Match(newUser.Email, ".+@.+[.]\\w").Success)
             {
@@ -125,10 +129,10 @@ namespace edusent_service.Controllers
 
         
 
-        [HttpPost]
+        [HttpPost("login")]
         [AllowAnonymous]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
 
