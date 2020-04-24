@@ -55,6 +55,7 @@ namespace edusent_service
 
                 all_domains = corsConfig.AllDomains;
 
+                // API Settings
                 //services.AddHttpClient("findCalendar", c =>
                 //{
                 //    c.BaseAddress = new Uri(Configuration["Google:Uri"]);
