@@ -39,6 +39,19 @@ namespace edusent_service.Controllers
 
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
+        [HttpGet("student/{userId}")]
+        public IActionResult GetAllSessionAsStudent(string userId)
+        {
+            var data = Repo.Find(x => x.StudentId == userId);
+            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
+        }
+        [HttpGet("teacher/{userId}")]
+        public IActionResult GetAllSessionAsTeacher(string userId)
+        {
+            var data = Repo.Find(x => x.TeacherId == userId);
+            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get( string id )
         {
@@ -47,30 +60,25 @@ namespace edusent_service.Controllers
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
 
-        [HttpGet("GetStatus/{id}")]
-        public async Task<IActionResult> GetStatus(string id )
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(string id, Session model)
         {
-            var data = await Repo.Find( x => x.Id == id);
-
-            return data == null ? (IActionResult)NotFound() : new ObjectResult(data.Status);
+            var data = await Repo.Update(model);
+            return data == null ? (IActionResult) NotFound() : (IActionResult) Created("Get", new { id = model.Id });
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete (string id )
+        {
+            Session data = await Repo.Remove(x => x.Id == id);
 
-        //Task<int> SetStatus(string id, SessionStatus status, bool persist = true);
-
-        //Task<IEnumerable<Session>> GetAllByUserId(string userId);
-
+            return data == null ? (IActionResult)NotFound() : Ok();
+        }
         [HttpPost]
         public async Task<IActionResult> Create(Session model)
         {
             await Repo.Create(model);
 
             return Created("Get", new { id = model.Id });
-        }
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Session model)
-        {
-            var data = await Repo.Update(model);
-            return data == null ? (IActionResult) NotFound() : (IActionResult) Created("Get", new { id = model.Id });
         }
     }
 }

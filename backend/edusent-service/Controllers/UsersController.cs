@@ -40,36 +40,42 @@ namespace edusent_service.Controllers
             _iMapper = iMapper;
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("all")]
+        public IActionResult GetAll()
         {
-            IEnumerable<User> data = await Repo.GetAll();
-            return Json(data);
+            IEnumerable<User> data = Repo.GetAll();
+            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
 
         [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(string id)
         {
-            User item = await Repo.Get(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-            return Json(item);
+            var data = await Repo.Get(id);
+            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
         [HttpGet("find/{name}")]
-        public async Task<IEnumerable<User>> FindUser(string name)
+        public async Task<IActionResult> FindUser(string name)
         {
-            IEnumerable<User> data = await FindUser(name);
-            return data;
+            var data = await Repo.FindUsers(name);
+            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
 
         [HttpGet("info")]
         public async Task<IActionResult> GetUserInfo()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
+            Console.WriteLine("\n\n\n"+ HttpContext.Request.Cookies.Count.ToString());
+            
+            foreach ( string head in HttpContext.Request.Headers.Values )
+            {
+                Console.WriteLine("\n" + head);
+            }
+            foreach ( string key in HttpContext.Request.Cookies.Keys)
+            {
+                Console.WriteLine("\n" + key );
+            }
+            Console.WriteLine("\n\n\n");
             if (user == null)
             {
                 return BadRequest(new ErrorMessage("No cookie found for user."));
@@ -79,8 +85,8 @@ namespace edusent_service.Controllers
             return Ok(userInfo);
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterViewModel newUser)
+        [HttpPost("signup")]
+        public async Task<IActionResult> SignUp([FromBody] RegisterViewModel newUser)
         {
 
             User user = new User();
@@ -91,9 +97,14 @@ namespace edusent_service.Controllers
             }
 
             if (newUser.Email != null)
+            {
                 user.Email = newUser.Email;
+                user.UserName = newUser.Email;
+            }
             else
+            {
                 return BadRequest();
+            }
 
             if (!Regex.Match(newUser.Email, ".+@.+[.]\\w").Success)
             {
@@ -115,7 +126,7 @@ namespace edusent_service.Controllers
                 var corsConfig = Configuration.GetSection("Cors").Get<CorsConfig>();
                 string frontendUrl = corsConfig.FrontendDomain;
 
-                return Created($"api/users/{user.Id}", new { Id = user.Id });
+                return Created($"users/{user.Id}", new { Id = user.Id });
             }
             else
             {
@@ -130,10 +141,10 @@ namespace edusent_service.Controllers
 
         
 
-        [HttpPost]
+        [HttpPost("login")]
         [AllowAnonymous]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
 

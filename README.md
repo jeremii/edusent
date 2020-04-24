@@ -4,7 +4,6 @@
 ##### Stack
 - .NET Core
 - SQL Server
-- Angular
 - Azure
 
 *Senior capstone project for CS 460.

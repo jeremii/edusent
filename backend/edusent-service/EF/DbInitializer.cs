@@ -26,12 +26,13 @@ namespace edusent_service.EF
 
         public static void ClearData(EdusentContext context)
         {
-            context.Database.ExecuteSqlCommand("DELETE FROM [dbo].[AspNetUsers]");
+            
             context.Database.ExecuteSqlCommand("DELETE FROM [edusent].[Sessions]");
             //context.Database.ExecuteSqlCommand("DELETE FROM [edusent].[Students]");
             //context.Database.ExecuteSqlCommand("DELETE FROM [edusent].[Teachers]");
             context.Database.ExecuteSqlCommand("DELETE FROM [edusent].[Ratings]");
             context.Database.ExecuteSqlCommand("DELETE FROM [edusent].[Subjects]");
+            context.Database.ExecuteSqlCommand("DELETE FROM [dbo].[AspNetUsers]");
         }
 
         private static void SeedData(EdusentContext context)
