@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Router } from "@reach/router";
+import {
+  Home,
+  Login,
+  Signup,
+  UserSessions,
+  CreateSession,
+  SessionDetails,
+  Search,
+  About,
+  Help,
+  Contact,
+} from "./pages";
+import Layout from "./Layout";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+export default () => (
+  <Router>
+    <Layout path="/">
+      {/* $FlowFixMe */}
+      <Home path="/" />
+      <Login path="login" />
+      <Signup path="signup" />
+      <UserSessions path="/user/sessions" />
+      <UserSessions path="/user/sessions/:pageId" />
+      {/* $FlowFixMe */}
+      <CreateSession path="/session/new" />
+      <About path="about" />
+      <Help path="help" />
+      <Contact path="contact" />
+      <SessionDetails path="/session/:id" />
+      <Search path="/search/:subject" />
+      <Search path="/search/:subject/:pageId" />
+    </Layout>
+  </Router>
+);

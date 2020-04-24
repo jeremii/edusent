@@ -18,6 +18,7 @@ namespace edusent_service.Controllers
 {
 
     [Route("[controller]")]
+    [ApiController]
     public class UsersController : Controller
     {
 
@@ -64,6 +65,17 @@ namespace edusent_service.Controllers
         public async Task<IActionResult> GetUserInfo()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
+            Console.WriteLine("\n\n\n"+ HttpContext.Request.Cookies.Count.ToString());
+            
+            foreach ( string head in HttpContext.Request.Headers.Values )
+            {
+                Console.WriteLine("\n" + head);
+            }
+            foreach ( string key in HttpContext.Request.Cookies.Keys)
+            {
+                Console.WriteLine("\n" + key );
+            }
+            Console.WriteLine("\n\n\n");
             if (user == null)
             {
                 return BadRequest(new ErrorMessage("No cookie found for user."));

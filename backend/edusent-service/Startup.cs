@@ -63,10 +63,10 @@ namespace edusent_service
                         });
                 });
 
-                services.AddHttpClient("findCalendar", c =>
-                {
-                    c.BaseAddress = new Uri(Configuration["Google:Uri"]);
-                });
+                //services.AddHttpClient("findCalendar", c =>
+                //{
+                //    c.BaseAddress = new Uri(Configuration["Google:Uri"]);
+                //});
 
 
                 var databaseConfig = Configuration.GetSection("Db").Get<DatabaseConfig>();
@@ -87,7 +87,7 @@ namespace edusent_service
             //services.AddScoped<IStudentRepo, StudentRepo>();
             services.AddScoped<ISessionRepo, SessionRepo>();
             services.AddScoped<IRatingRepo, RatingRepo>();
-            
+            services.AddScoped<ISubjectRepo, SubjectRepo>();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -99,6 +99,17 @@ namespace edusent_service
                 options.Password.RequireLowercase = false;
                 options.Password.RequiredUniqueChars = 6;
 
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
+
+            services.Configure<IdentityOptions>(options =>
+            {
                 // Lockout settings
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
                 options.Lockout.MaxFailedAccessAttempts = 10;
@@ -133,8 +144,10 @@ namespace edusent_service
                 };
             });
 
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -152,8 +165,6 @@ namespace edusent_service
             {
                 app.UseHsts();
             }
-
-            
 
             app.UseHttpsRedirection();
 
