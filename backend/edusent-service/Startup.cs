@@ -27,7 +27,7 @@ namespace edusent_service
 {
     public class Startup
     {
-        readonly string AllowAnywhere = "_AllowAnywhere";
+        string AllowAnywhere = "_AllowAnywhere";
 
         public Startup(IConfiguration configuration)
         {
@@ -44,7 +44,8 @@ namespace edusent_service
             // Use SQL Database if in Azure, otherwise, use SQLite
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
             {
-               
+
+                AllowAnywhere = "_DeploymentCors";
 
                 services.AddDbContext<EdusentContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("azure_connection_string")));   
