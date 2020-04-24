@@ -39,7 +39,7 @@ namespace edusent_service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string[] all_domains = new string[] { "https://edusent.com", "https://awesome-pike-0e1795.netlify.app" };
+            string[] all_domains = new string[] { "https://edusent.com:443", "http://edusent.com:80", "https://edusent.netlify.app:443" };
 
             // Use SQL Database if in Azure, otherwise, use SQLite
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
