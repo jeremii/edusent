@@ -39,10 +39,13 @@ namespace edusent_service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string[] all_domains = new string[] { "https://edusent.com", "https://awesome-pike-0e1795.netlify.app" };
 
             // Use SQL Database if in Azure, otherwise, use SQLite
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
             {
+               
+
                 services.AddDbContext<EdusentContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("azure_connection_string")));   
             }
@@ -50,18 +53,7 @@ namespace edusent_service
             {
                 var corsConfig = Configuration.GetSection("Cors").Get<CorsConfig>();
 
-                services.AddCors(options =>
-                {
-                    options.AddPolicy(AllowAnywhere,
-                        builder =>
-                        {
-                            builder.WithOrigins(corsConfig.AllDomains)
-                                .AllowAnyHeader()
-                                .WithExposedHeaders("*")
-                                .AllowCredentials()
-                                .AllowAnyMethod();
-                        });
-                });
+                all_domains = corsConfig.AllDomains;
 
                 //services.AddHttpClient("findCalendar", c =>
                 //{
@@ -73,6 +65,20 @@ namespace edusent_service
                 services.AddDbContext<EdusentContext>(options =>
                     options.UseSqlServer(databaseConfig.Connection));
             }
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(AllowAnywhere,
+                    builder =>
+                    {
+                        builder.WithOrigins(all_domains)
+                            .AllowAnyHeader()
+                            .WithExposedHeaders("*")
+                            .AllowCredentials()
+                            .AllowAnyMethod();
+                    });
+            });
+
 
             // Automatically perform database migration
             services.BuildServiceProvider().GetService<EdusentContext>().Database.Migrate();
