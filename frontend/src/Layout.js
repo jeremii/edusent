@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import type { Node } from "react";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import AppBar from "@material-ui/core/AppBar";
-import { Link } from "@reach/router";
-import { Menu, MenuItem } from "@material-ui/core";
-import styled from "styled-components";
-import { isNil } from "ramda";
-import useUserInfo from "./hooks/useUserInfo";
-import { apiFetch } from "./utils/fetchLight";
+import React, { useState } from "react"
+import type { Node } from "react"
+import Toolbar from "@material-ui/core/Toolbar"
+import Typography from "@material-ui/core/Typography"
+import AppBar from "@material-ui/core/AppBar"
+import { Link } from "@reach/router"
+import { Menu, MenuItem } from "@material-ui/core"
+import styled from "styled-components"
+import { isNil } from "ramda"
+import useUserInfo from "./hooks/useUserInfo"
+import { apiFetch } from "./utils/fetchLight"
 
 const CustomToolBar = styled(Toolbar)`
   & > h6 {
@@ -19,7 +19,7 @@ const CustomToolBar = styled(Toolbar)`
     text-decoration: none;
   }
   background-color: #096;
-`;
+`
 const Logo = styled.span`
   & > a {
     color: #6f9;
@@ -27,15 +27,15 @@ const Logo = styled.span`
   }
   margin-right: 2rem;
   font-size: 1.65em;
-`;
+`
 const Subtitle = styled.div`
   font-size: 0.45em;
   display: none;
-`;
+`
 
 type Props = {
   children: Node,
-};
+}
 
 export default ({ children }: Props) => {
   return (
@@ -61,20 +61,20 @@ export default ({ children }: Props) => {
       </AppBar>
       <main>{children}</main>
     </div>
-  );
-};
+  )
+}
 
 const UserNavOrDefault = () => {
-  const { userInfo } = useUserInfo();
-  const [anchorEl, setAnchorEl] = useState(null);
+  const { userInfo } = useUserInfo()
+  const [anchorEl, setAnchorEl] = useState(null)
 
   const handleLogout = () => {
     apiFetch(`users/logout`, "POST", {}).then(() =>
       window.location.replace(`/login`)
-    );
-  };
-  const handleClick = (e) => setAnchorEl(e.currentTarget);
-  const handleClose = () => setAnchorEl(null);
+    )
+  }
+  const handleClick = (e) => setAnchorEl(e.currentTarget)
+  const handleClose = () => setAnchorEl(null)
 
   if (isNil(userInfo))
     return (
@@ -89,22 +89,20 @@ const UserNavOrDefault = () => {
         </Typography>
         {/* <Typography onClick={handleLogout}>Logout</Typography> */}
       </>
-    );
+    )
   return (
     <>
       <Typography
         variant="h6"
         onClick={handleClick}
-        style={{ marginLeft: "auto", cursor: "pointer" }}
-      >
+        style={{ marginLeft: "auto", cursor: "pointer" }}>
         {userInfo.userName}
       </Typography>
       <Menu
         id="user-menu"
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
-        onClose={handleClose}
-      >
+        onClose={handleClose}>
         <MenuItem onClick={handleClose}>
           {/* $FlowFixMe */}
           <Link to="/user/sessions"> My sessions</Link>
@@ -117,10 +115,9 @@ const UserNavOrDefault = () => {
       <Typography
         variant="h6"
         onClick={handleLogout}
-        style={{ marginLeft: "relative", cursor: "pointer" }}
-      >
+        style={{ marginLeft: "relative", cursor: "pointer" }}>
         Logout
       </Typography>
     </>
-  );
-};
+  )
+}

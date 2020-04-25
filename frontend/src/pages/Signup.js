@@ -1,6 +1,13 @@
 import React from "react";
-import { Button, Typography } from "@material-ui/core";
-import { Field, Formik, Form } from "formik";
+import {
+    Button,
+    Typography
+} from "@material-ui/core";
+import {
+    Field,
+    Formik,
+    Form
+} from "formik";
 import styled from "styled-components";
 import * as Yup from "yup";
 import Input from "../ui/Input";
@@ -9,10 +16,9 @@ import SiteMargin from "../ui/SiteMargin";
 import Stack from "../ui/Stack";
 
 const signupSchema = Yup.object ().shape ( {
-    email: Yup.string ().email ( "Invalid email address" ).required ( "Email Required" ),
+    email   : Yup.string ().email ( "Invalid email address" ).required ( "Email Required" ),
     password: Yup.string ().min ( 8, "Password must be at least 8 characters long." ).required ( "Password required." )
 } );
-
 const StyledForm = styled.div `
   & > form {
     width: 750px;
@@ -23,7 +29,9 @@ const StyledForm = styled.div `
   }
 `;
 
-const Signup = ( { navigate } : Object ) => {
+const Signup = ( {
+  navigate
+} : Object ) => {
     return (
         <SiteMargin>
             <Formik validateOnChange
@@ -45,9 +53,12 @@ const Signup = ( { navigate } : Object ) => {
                             }
                         } ). finally ( () => formikBag.setSubmitting ( false ) );
                     }
-            }>
-                {
-                ( { isSubmitting, isValid, status } ) => (
+            }> {
+                ( {
+                    isSubmitting,
+                    isValid,
+                    status
+                } ) => (
                     <StyledForm>
                         <Form>
                             <Typography variant="h1">Signup</Typography>
@@ -55,8 +66,7 @@ const Signup = ( { navigate } : Object ) => {
                                 <br/> {
                                 status && <h4 style={
                                     { color: "red" };
-                                }>
-                                    {status}</h4>;
+                                }> {status}</h4>;
                             }
                                 <Field id="email" name="email" label="Email"
                                     component={Input}
