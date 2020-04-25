@@ -8,7 +8,7 @@ import { apiFetch } from "../utils/fetchLight"
 import SiteMargin from "../ui/SiteMargin"
 import Stack from "../ui/Stack"
 
-const signupSchema = Yup.object().shape({
+const registerSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email address")
     .required("Email Required"),
@@ -16,6 +16,7 @@ const signupSchema = Yup.object().shape({
     .min(8, "Password must be at least 8 characters long.")
     .required("Password required."),
 })
+
 const StyledForm = styled.div`
   & > form {
     width: 750px;
@@ -31,7 +32,7 @@ const Signup = ({ navigate }: Object) => {
     <SiteMargin>
       <Formik
         validateOnChange
-        validationSchema={signupSchema}
+        validationSchema={registerSchema}
         initialValues={{
           email: "",
           password: "",
@@ -49,13 +50,13 @@ const Signup = ({ navigate }: Object) => {
             })
             .finally(() => formikBag.setSubmitting(false))
         }}>
-        {" "}
         {({ isSubmitting, isValid, status }) => (
           <StyledForm>
             <Form>
               <Typography variant="h1">Signup</Typography>
               <Stack>
-                <br /> {status && <h4 style={{ color: "red" }}> {status}</h4>}
+                <br />
+                {status && <h4 style={{ color: "red" }}>{status}</h4>}
                 <Field
                   id="email"
                   name="email"
@@ -87,9 +88,10 @@ const Signup = ({ navigate }: Object) => {
               </Stack>
             </Form>
           </StyledForm>
-        )}{" "}
+        )}
       </Formik>
     </SiteMargin>
   )
 }
+
 export default Signup
