@@ -121,11 +121,7 @@ namespace edusent_service.Controllers
             var result = await _userManager.CreateAsync(user, newUser.Password);
 
             if (result.Succeeded)
-            {
-                
-                var corsConfig = Configuration.GetSection("Cors").Get<CorsConfig>();
-                string frontendUrl = corsConfig.FrontendDomain;
-
+            {               
                 return Created($"users/{user.Id}", new { Id = user.Id });
             }
             else
