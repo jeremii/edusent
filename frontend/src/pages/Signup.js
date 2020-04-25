@@ -40,7 +40,9 @@ const Signup = ({ navigate }: Object) => {
         onSubmit={(formValues, formikBag) => {
           apiFetch("users/signup", "POST", formValues)
             .then(() => {
-              navigate(`/`)
+              apiFetch("users/login", "POST", formValues).then(() => {
+                navigate(`/`)
+              })
             })
             .catch(async (error) => {
               const body = await error.response.json()
