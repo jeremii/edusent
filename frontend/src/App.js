@@ -1,18 +1,18 @@
-import React from "react";
-import { Router } from "@reach/router";
+import React from "react"
+import { Router } from "@reach/router"
 import {
   Home,
   Login,
   Signup,
   UserSessions,
-  CreateSession,
+  SessionCreate,
   SessionDetails,
   Search,
   About,
   Help,
   Contact,
-} from "./pages";
-import Layout from "./Layout";
+} from "./pages"
+import Layout from "./Layout"
 
 export default () => (
   <Router>
@@ -24,7 +24,7 @@ export default () => (
       <UserSessions path="/user/sessions" />
       <UserSessions path="/user/sessions/:pageId" />
       {/* $FlowFixMe */}
-      <CreateSession path="/session/new" />
+      <SessionCreate path="/session/new" />
       <About path="about" />
       <Help path="help" />
       <Contact path="contact" />
@@ -33,4 +33,4 @@ export default () => (
       <Search path="/search/:subject/:pageId" />
     </Layout>
   </Router>
-);
+)
