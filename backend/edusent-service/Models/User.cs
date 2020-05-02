@@ -32,6 +32,8 @@ namespace edusent_service.Models
 
         public double MoneyMade { get; set; }
 
+        public float Rating { get; set; }
+
         [InverseProperty(nameof(Subject.User))]
         public List<Subject> Subjects { get; set; } = new List<Subject>();
 

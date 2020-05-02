@@ -49,7 +49,8 @@ namespace edusent_service.EF.Migrations
                     LastName = table.Column<string>(maxLength: 128, nullable: true),
                     Phone = table.Column<string>(nullable: true),
                     isTeacher = table.Column<bool>(nullable: true),
-                    MoneyMade = table.Column<double>(nullable: true)
+                    MoneyMade = table.Column<double>(nullable: true),
+                    Rating = table.Column<float>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -102,8 +103,8 @@ namespace edusent_service.EF.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(nullable: false),
-                    ProviderKey = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -147,8 +148,8 @@ namespace edusent_service.EF.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    Name = table.Column<string>(maxLength: 128, nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

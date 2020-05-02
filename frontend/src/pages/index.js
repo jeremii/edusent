@@ -8,6 +8,7 @@ import Search from "./Search"
 import About from "./About"
 import Help from "./Help"
 import Contact from "./Contact"
+import SearchTeachers from "./SearchTeachers"
 
 export {
   Home,
@@ -20,4 +21,5 @@ export {
   About,
   Help,
   Contact,
+  SearchTeachers,
 }

@@ -23,12 +23,17 @@ namespace edusent_service.Controllers
     public class SubjectsController : Controller
     {
         private ISubjectRepo Repo { get; set; }
+        private IUserRepo _UserRepo { get; set; }
+        private readonly IMapper _iMapper;
 
-        
-        public SubjectsController(ISubjectRepo repo)
+
+        public SubjectsController(ISubjectRepo repo, IUserRepo userRepo, IMapper iMapper)
 
         {
             Repo = repo;
+            _UserRepo = userRepo;
+            _iMapper = iMapper;
+
             
         }
 
@@ -38,6 +43,28 @@ namespace edusent_service.Controllers
             var data = Repo.GetAll();
 
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
+        }
+        [HttpGet("teachers/{term}")]
+        public async Task<IActionResult> GetTeachersBySubject(string term)
+        {
+            IEnumerable<Subject> data = Repo.GetAllBySubject(term);
+            List<TeacherOverviewViewModel> teachers = new List<TeacherOverviewViewModel>();
+
+            
+            foreach( Subject item in data)
+            {
+                Console.WriteLine(item.Name);
+                User teacher = await _UserRepo.Get(item.UserId);
+                teachers.Add(new TeacherOverviewViewModel
+                {
+                    FullName = teacher.FirstName + " " + teacher.LastName,
+                    Rating = teacher.Rating,
+                    Subjects = Repo.GetSubjectsById(item.UserId),
+                    UserId = teacher.Id
+                });
+
+            }
+            return Ok(teachers);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> Get( string id )

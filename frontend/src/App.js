@@ -11,6 +11,7 @@ import {
   About,
   Help,
   Contact,
+  SearchTeachers,
 } from "./pages"
 import Layout from "./Layout"
 
@@ -25,6 +26,7 @@ export default () => (
       <UserSessions path="/user/sessions/:pageId" />
       {/* $FlowFixMe */}
       <SessionCreate path="/session/new" />
+      <SearchTeachers path="/subjects/teachers/:term" />
       <About path="about" />
       <Help path="help" />
       <Contact path="contact" />
