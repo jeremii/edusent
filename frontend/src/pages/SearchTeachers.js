@@ -41,5 +41,5 @@ const SearchTeachers = ({ term }: Props) => {
     </SiteMargin>
   )
 }
-
+// I really dislike having to do this to meet a deadline.
 export default withSearchBar(SearchTeachers)
