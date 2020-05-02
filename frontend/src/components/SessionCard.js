@@ -2,16 +2,9 @@ import React from "react"
 import { Link } from "@reach/router"
 import { Grid, Card, Typography } from "@material-ui/core"
 import styled from "styled-components"
-import ImageWithFallback from "./ImageWithFallback"
 
-type Props = {
-  teacher: {
-    UserId: string,
-    FullName: string,
-    Rating: string,
-    Subjects: string,
-  },
-}
+
+type Props = {}
 
 const StyledCard = styled(Card)`
   position: relative;
@@ -53,34 +46,43 @@ const StyledCard = styled(Card)`
 //   }
 // `
 
-const TeacherCard = ({
-  teacher: { fullName, rating, subjects, userId },
+const SessionCard = ({
+  session: { status, duration, start, day = new Date(start) },
 }: Props) => (
-  <Grid item>
-    {/* //$FlowFixMe */}
-    <Link to={`/sessions/teacher/${userId}`} style={{ textDecoration: "none" }}>
+    <Grid item>
+      {/* //$FlowFixMe */}
       <StyledCard>
         <div style={{ gridArea: "about" }}>
           <font color="gray">
-            <strong>TEACHER</strong>
+            <strong>DATETIME</strong>
           </font>
-          <Typography variant="h4">
-            <font color="#096">{fullName}</font>
-          </Typography>
-          <Typography variant="subtitle1">
+          <Typography variant="h5">
             <font color="#096">
-              <strong>{rating}</strong>
+              {
+                new Intl.DateTimeFormat('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: '2-digit',
+                  hour: 'numeric', minute: 'numeric'
+                }).format(day)
+
+              }
+            </font>
+          </Typography>
+          <Typography variant="h4">
+            <font color="#096">
+              <strong>{duration} mins</strong>
             </font>
           </Typography>
           <br />
           <font color="gray">
-            <strong>SUBJECTS</strong>
+            <strong>STATUS</strong>
           </font>
-          <Typography variant="body1">{subjects}</Typography>
+          <Typography variant="body1">Confirmed</Typography>
         </div>
       </StyledCard>
-    </Link>
-  </Grid>
-)
 
-export default TeacherCard
+    </Grid>
+  )
+
+export default SessionCard

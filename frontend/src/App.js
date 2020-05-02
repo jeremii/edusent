@@ -4,7 +4,7 @@ import {
   Home,
   Login,
   Signup,
-  UserSessions,
+  TeacherSessions,
   SessionCreate,
   SessionDetails,
   Search,
@@ -22,8 +22,7 @@ export default () => (
       <Home path="/" />
       <Login path="login" />
       <Signup path="signup" />
-      <UserSessions path="/user/sessions" />
-      <UserSessions path="/user/sessions/:pageId" />
+      <TeacherSessions path="/sessions/teacher/:userId" />
       {/* $FlowFixMe */}
       <SessionCreate path="/session/new" />
       <SearchTeachers path="/subjects/teachers/:term" />

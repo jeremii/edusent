@@ -8,6 +8,7 @@ using edusent_service.Models;
 using edusent_service.Repos.Interfaces;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
+using edusent_service.Models.ViewModels;
 
 namespace edusent_service.Repos
 {
@@ -15,11 +16,13 @@ namespace edusent_service.Repos
     {
         public readonly EdusentContext Db;
         public DbSet<User> Table { get; }
+        public ISubjectRepo _subjectRepo { get; set; }
 
-        public UserRepo(DbContextOptions<EdusentContext> options)
+        public UserRepo(DbContextOptions<EdusentContext> options, ISubjectRepo subjectRepo)
         {
             Db = new EdusentContext(options);
             Table = Db.Set<User>();
+            _subjectRepo = subjectRepo;
         }
 
 
@@ -77,7 +80,7 @@ namespace edusent_service.Repos
             IEnumerable<User> results = Table.OrderBy(x => x.LastName);
             return results;
         }
-
+        
         public async Task<User> Get(string id)
         {
             return await Table.FindAsync(id);
@@ -128,6 +131,20 @@ namespace edusent_service.Repos
         {
             int count = Table.Where(e => e.Email.ToLower().Equals(email.ToLower())).Count();
             return count > 0 ? true : false;
+        }
+        public async Task<TeacherOverviewViewModel> GetTeacherOverview(string userId)
+        {
+            User data = await Table.Where(x => x.Id == userId).FirstAsync();
+
+            
+            TeacherOverviewViewModel teacher = new TeacherOverviewViewModel
+            {
+                FullName = data.FirstName + " " + data.LastName,
+                Rating = data.Rating + " STARS",
+                Subjects = _subjectRepo.GetSubjectsById(userId),
+                UserId = userId,
+            };
+            return teacher;
         }
     }
 }

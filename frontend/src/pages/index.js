@@ -1,7 +1,7 @@
 import Home from "./Home"
 import Login from "./Login"
 import Signup from "./Signup"
-import UserSessions from "./UserSessions"
+import TeacherSessions from "./TeacherSessions"
 import SessionCreate from "./SessionCreate"
 import SessionDetails from "./SessionDetails"
 import Search from "./Search"
@@ -14,7 +14,7 @@ export {
   Home,
   Login,
   Signup,
-  UserSessions,
+  TeacherSessions,
   SessionCreate,
   SessionDetails,
   Search,

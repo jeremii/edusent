@@ -3,7 +3,7 @@ using edusent_service.Repos.Base;
 using edusent_service.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using edusent_service.Models.ViewModels;
 namespace edusent_service.Repos.Interfaces
 {
     public interface IUserRepo
@@ -18,5 +18,6 @@ namespace edusent_service.Repos.Interfaces
         Task<string> GetUsernameByEmail(string email);
         Task<bool> UsernameExists(string username);
         Task<bool> EmailExists(string email);
+        Task<TeacherOverviewViewModel> GetTeacherOverview(string userId);
     }
 }

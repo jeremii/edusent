@@ -98,20 +98,18 @@ const UserNavOrDefault = () => {
         style={{ marginLeft: "auto", cursor: "pointer" }}>
         {userInfo.userName}
       </Typography>
-      <Menu
+      {/* <Menu
         id="user-menu"
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
         onClose={handleClose}>
         <MenuItem onClick={handleClose}>
-          {/* $FlowFixMe */}
           <Link to="/user/sessions"> My sessions</Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          {/* $FlowFixMe */}
           <Link to="/sessions/new"> New session</Link>
         </MenuItem>
-      </Menu>
+      </Menu> */}
       <Typography
         variant="h6"
         onClick={handleLogout}

@@ -48,8 +48,9 @@ namespace edusent_service.Controllers
         [HttpGet("teacher/{userId}")]
         public IActionResult GetAllSessionAsTeacher(string userId)
         {
-            var data = Repo.Find(x => x.TeacherId == userId);
-            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
+            IEnumerable<Session> sessions = Repo.GetAll(x => x.TeacherId == userId);
+            
+            return sessions == null ? (IActionResult)NotFound() : new ObjectResult(sessions);
         }
 
         [HttpGet("{id}")]

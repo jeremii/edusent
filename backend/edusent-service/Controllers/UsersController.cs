@@ -65,16 +65,8 @@ namespace edusent_service.Controllers
         public async Task<IActionResult> GetUserInfo()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            Console.WriteLine("\n\n\n"+ HttpContext.Request.Cookies.Count.ToString());
+           
             
-            foreach ( string head in HttpContext.Request.Headers.Values )
-            {
-                Console.WriteLine("\n" + head);
-            }
-            foreach ( string key in HttpContext.Request.Cookies.Keys)
-            {
-                Console.WriteLine("\n" + key );
-            }
             Console.WriteLine("\n\n\n");
             if (user == null)
             {
@@ -83,6 +75,13 @@ namespace edusent_service.Controllers
 
             var userInfo = _iMapper.Map<UserInfoViewModel>(user);
             return Ok(userInfo);
+        }
+        [HttpGet("teacher/{userId}")]
+        public async Task<IActionResult> GetTeacherOverview( string userId)
+        {
+            var data = await Repo.GetTeacherOverview(userId);
+
+            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
 
         [HttpPost("signup")]

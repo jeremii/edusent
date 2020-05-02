@@ -30,17 +30,5 @@ namespace edusent_service.Repos
             foreach (Session sesh in results) sessions.Add(sesh);
             return sessions;
         }
-        public int SaveChanges()
-        {
-            try
-            {
-                return Db.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                throw;
-            }
-        }
     }
 }

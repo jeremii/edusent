@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core"
 import { apiFetch } from "../utils/fetchLight"
 import TeacherCard from "../components/TeacherCard"
 import SiteMargin from "../ui/SiteMargin"
-import Paging from "../components/Paging"
+
 import withSearchBar from "../components/withSearchBar"
 
 type Props = {
@@ -17,7 +17,7 @@ type Props = {
 }
 
 const SearchTeachers = ({ term }: Props) => {
-  const [teachers, setTeachers] = useState();
+  const [teachers, setTeachers] = useState()
   useEffect(() => {
     // const urlConditions = urlParams.get("conditions");
     // const conditions = urlConditions ? urlConditions.split(",") : [];
