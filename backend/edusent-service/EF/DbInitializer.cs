@@ -50,7 +50,7 @@ namespace edusent_service.EF
             //context.Database.ExecuteSqlCommand(teachers);
             context.Database.ExecuteSqlCommand(sessions);
             context.Database.ExecuteSqlCommand(ratings);
-            //context.Database.ExecuteSqlCommand(subjects);
+            context.Database.ExecuteSqlCommand(subjects);
 
         }
     }

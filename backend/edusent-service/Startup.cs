@@ -64,8 +64,7 @@ namespace edusent_service
 
 
                 var databaseConfig = Configuration.GetSection("Db").Get<DatabaseConfig>();
-                services.AddDbContext<EdusentContext>(options =>
-                    options.UseSqlServer(databaseConfig.Connection));
+                services.AddDbContext<EdusentContext>(options => options.UseSqlServer(databaseConfig.Connection));
             }
 
             services.AddCors(options =>

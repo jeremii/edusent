@@ -1,28 +1,28 @@
-import React from "react";
-import { Field, Formik, Form } from "formik";
-import { Typography, Button } from "@material-ui/core";
-import * as Yup from "yup";
-import styled from "styled-components";
-import useApi from "../hooks/useApi";
-import SiteMargin from "../ui/SiteMargin";
-import RadioButton from "../ui/RadioButton";
-import { apiFetch } from "../utils/fetchLight";
-import Input from "../ui/Input";
-import Stack from "../ui/Stack";
+import React from "react"
+import { Field, Formik, Form } from "formik"
+import { Typography, Button } from "@material-ui/core"
+import * as Yup from "yup"
+import styled from "styled-components"
+import useApi from "../hooks/useApi"
+import SiteMargin from "../ui/SiteMargin"
+import RadioButton from "../ui/RadioButton"
+import { apiFetch } from "../utils/fetchLight"
+import Input from "../ui/Input"
+import Stack from "../ui/Stack"
 
 const getQueryParams = (url) => {
-  const queries = new URLSearchParams(url);
-  const params = {};
+  const queries = new URLSearchParams(url)
+  const params = {}
   queries.forEach((value, name) => {
-    params[name] = value;
-  });
-  return params;
-};
+    params[name] = value
+  })
+  return params
+}
 
 const callIfTruthyElseReturnDefault = (func) => (defaultVal) => (value) => {
-  if (value) return func(value);
-  return defaultVal;
-};
+  if (value) return func(value)
+  return defaultVal
+}
 
 const sessionSchema = Yup.object().shape({
   title: Yup.string()
@@ -43,7 +43,7 @@ const sessionSchema = Yup.object().shape({
   contactOption: Yup.string()
     .min(1)
     .required(),
-});
+})
 
 const StyledForm = styled.div`
   & > form {
@@ -53,10 +53,10 @@ const StyledForm = styled.div`
     border-radius: 5px;
     padding: 2rem;
   }
-`;
+`
 
 const ConditionRadios = () => {
-  const { data: conditions } = useApi("conditions");
+  const { data: conditions } = useApi("conditions")
   return (
     <fieldset>
       <legend>Condition</legend>
@@ -71,20 +71,20 @@ const ConditionRadios = () => {
           />
         ))}
     </fieldset>
-  );
-};
+  )
+}
 
 const getAboutText = (contactEnumValue) => {
   switch (contactEnumValue) {
     case 0:
-      return "Seller will receive an email with the Buyer's contact information and an additional message. Buyer will not see any information about the Seller unless the Seller replies to the email";
+      return "Seller will receive an email with the Buyer's contact information and an additional message. Buyer will not see any information about the Seller unless the Seller replies to the email"
     default:
-      return "Missing Enum Match";
+      return "Missing Enum Match"
   }
-};
+}
 
 const MethodOfContactRadios = () => {
-  const { data } = useApi("listings/contact");
+  const { data } = useApi("listings/contact")
 
   return (
     <fieldset>
@@ -103,22 +103,22 @@ const MethodOfContactRadios = () => {
             />
           ))}
     </fieldset>
-  );
-};
+  )
+}
 
 type Props = {
   navigate: (string) => any,
   location: { search: string },
-};
+}
 
-const CreateSession = ({ navigate }: Props) => {
+const SessionCreate = ({ navigate }: Props) => {
   const {
     title,
     authors,
     description,
     smallThumbnail,
     thumbnail,
-  } = getQueryParams(window.location.search);
+  } = getQueryParams(window.location.search)
 
   return (
     <SiteMargin>
@@ -135,12 +135,11 @@ const CreateSession = ({ navigate }: Props) => {
         onSubmit={(formValues, formikBag) => {
           apiFetch("sessions", "POST", formValues)
             .then(async (res) => {
-              const body = await res.json();
-              navigate(`/sessions/${body.id}`);
+              const body = await res.json()
+              navigate(`/sessions/${body.id}`)
             })
-            .finally(() => formikBag.setSubmitting(false));
-        }}
-      >
+            .finally(() => formikBag.setSubmitting(false))
+        }}>
         {({ isSubmitting, isValid }) => (
           <StyledForm>
             <Form>
@@ -219,8 +218,7 @@ const CreateSession = ({ navigate }: Props) => {
                   color="primary"
                   align="right"
                   fullWidth
-                  disabled={isSubmitting || !isValid}
-                >
+                  disabled={isSubmitting || !isValid}>
                   Submit
                 </Button>
               </Stack>
@@ -229,7 +227,7 @@ const CreateSession = ({ navigate }: Props) => {
         )}
       </Formik>
     </SiteMargin>
-  );
-};
+  )
+}
 
-export default CreateSession;
+export default SessionCreate

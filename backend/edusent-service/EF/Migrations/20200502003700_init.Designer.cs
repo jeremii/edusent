@@ -10,16 +10,102 @@ using edusent_service.EF;
 namespace edusent_service.EF.Migrations
 {
     [DbContext(typeof(EdusentContext))]
-    [Migration("20200417192508_init")]
+    [Migration("20200502003700_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
+                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("edusent_service.Models.Rating", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("RateForTeacher");
+
+                    b.Property<int>("Reason");
+
+                    b.Property<string>("SessionId")
+                        .IsRequired();
+
+                    b.Property<byte>("Stars");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SessionId");
+
+                    b.ToTable("Ratings","edusent");
+                });
+
+            modelBuilder.Entity("edusent_service.Models.Session", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("ActualStart");
+
+                    b.Property<DateTime?>("AcutalEnd");
+
+                    b.Property<int>("Duration");
+
+                    b.Property<double>("Latitude");
+
+                    b.Property<double>("Longitude");
+
+                    b.Property<DateTime>("Start");
+
+                    b.Property<int>("Status");
+
+                    b.Property<string>("StudentId")
+                        .IsRequired();
+
+                    b.Property<string>("TeacherId");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<int>("Tip");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Sessions","edusent");
+                });
+
+            modelBuilder.Entity("edusent_service.Models.Subject", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(128);
+
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Subjects","edusent");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -143,9 +229,11 @@ namespace edusent_service.EF.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("ProviderKey");
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -176,101 +264,17 @@ namespace edusent_service.EF.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Value");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("edusent_service.Models.Rating", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("RateForTeacher");
-
-                    b.Property<int>("Reason");
-
-                    b.Property<string>("SessionId")
-                        .IsRequired();
-
-                    b.Property<byte>("Stars");
-
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SessionId");
-
-                    b.ToTable("Ratings","edusent");
-                });
-
-            modelBuilder.Entity("edusent_service.Models.Session", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime?>("ActualStart");
-
-                    b.Property<DateTime?>("AcutalEnd");
-
-                    b.Property<int>("Duration");
-
-                    b.Property<double>("Latitude");
-
-                    b.Property<double>("Longitude");
-
-                    b.Property<DateTime>("Start");
-
-                    b.Property<int>("Status");
-
-                    b.Property<string>("StudentId")
-                        .IsRequired();
-
-                    b.Property<string>("TeacherId");
-
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.Property<int>("Tip");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("TeacherId");
-
-                    b.ToTable("Sessions","edusent");
-                });
-
-            modelBuilder.Entity("edusent_service.Models.Subject", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
-
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.Property<string>("UserId")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Subjects","edusent");
                 });
 
             modelBuilder.Entity("edusent_service.Models.User", b =>
@@ -287,11 +291,41 @@ namespace edusent_service.EF.Migrations
 
                     b.Property<string>("Phone");
 
+                    b.Property<float>("Rating");
+
                     b.Property<bool>("isTeacher");
 
                     b.ToTable("Users","edusent");
 
                     b.HasDiscriminator().HasValue("User");
+                });
+
+            modelBuilder.Entity("edusent_service.Models.Rating", b =>
+                {
+                    b.HasOne("edusent_service.Models.Session", "Session")
+                        .WithMany("Ratings")
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("edusent_service.Models.Session", b =>
+                {
+                    b.HasOne("edusent_service.Models.User", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("edusent_service.Models.User", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId");
+                });
+
+            modelBuilder.Entity("edusent_service.Models.Subject", b =>
+                {
+                    b.HasOne("edusent_service.Models.User", "User")
+                        .WithMany("Subjects")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -335,34 +369,6 @@ namespace edusent_service.EF.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("edusent_service.Models.Rating", b =>
-                {
-                    b.HasOne("edusent_service.Models.Session", "Session")
-                        .WithMany("Ratings")
-                        .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("edusent_service.Models.Session", b =>
-                {
-                    b.HasOne("edusent_service.Models.User", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("edusent_service.Models.User", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherId");
-                });
-
-            modelBuilder.Entity("edusent_service.Models.Subject", b =>
-                {
-                    b.HasOne("edusent_service.Models.User", "User")
-                        .WithMany("Subjects")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
