@@ -6,10 +6,10 @@ import ImageWithFallback from "./ImageWithFallback"
 
 type Props = {
   teacher: {
-    id: string,
-    fullname: string,
-    rating: string,
-    subjects: string,
+    UserId: string,
+    FullName: string,
+    Rating: string,
+    Subjects: string,
   },
 }
 
@@ -17,13 +17,12 @@ const StyledCard = styled(Card)`
   position: relative;
   display: grid;
   grid-template:
-    "thumbnail" auto
-    "about"/ 1fr;
+    "about" 100%;
   width: 400px;
-  grid-gap: 1rem;
+  grid-gap: 0rem;
   padding: 1rem;
   overflow: visible !important;
-  margin: 1rem;
+  margin: 0.1rem;
 
   & img {
     width: 100%;
@@ -35,42 +34,44 @@ const StyledCard = styled(Card)`
     right: -25px;
     top: -25px;
     z-index: 10;
-    background: #3f51b5;
-    padding: 0 0.5rem;
+    background: #000;
+    padding: 0 0.2em;
     * {
       font-size: 2rem;
     }
   }
 `
 
-const ExtraInfoLayout = styled.div`
-  padding-top: 1rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+// const ExtraInfoLayout = styled.div`
+//   padding-top: 1rem;
+//   display: grid;
+//   grid-template-columns: 1fr 1fr;
 
-  & > *:last-child {
-    justify-self: flex-end;
-    align-self: flex-end;
-  }
-`
+//   & > *:last-child {
+//     justify-self: flex-end;
+//     align-self: flex-end;
+//   }
+// `
 
 const TeacherCard = ({
-  teacher: { fullname, rating, subjects, id },
+  teacher: { fullName, rating, subjects, id },
 }: Props) => (
-  <Grid item>
-    {/* //$FlowFixMe */}
-    <Link to={`/users/${id}`} style={{ textDecoration: "none" }}>
-      <StyledCard raised>
-        <div style={{ gridArea: "about" }}>
-          <Typography variant="h4">{fullname}</Typography>
-          <Typography variant="subtitle1">{rating}</Typography>
-          <ExtraInfoLayout>
+    <Grid item>
+      {/* //$FlowFixMe */}
+      <Link to={`/users/${id}`} style={{ textDecoration: "none" }}>
+        <StyledCard raised>
+          <div style={{ gridArea: "about" }}>
+            <font color="gray"><strong>TEACHER</strong></font>
+            <Typography variant="h4"><font color="#096">{fullName}</font></Typography>
+            <Typography variant="subtitle1"><font color="#096"><strong>{rating}</strong></font></Typography>
+            <br />
+            <font color="gray"><strong>SUBJECTS</strong></font>
             <Typography variant="body1">{subjects}</Typography>
-          </ExtraInfoLayout>
-        </div>
-      </StyledCard>
-    </Link>
-  </Grid>
-)
+
+          </div>
+        </StyledCard>
+      </Link>
+    </Grid>
+  )
 
 export default TeacherCard

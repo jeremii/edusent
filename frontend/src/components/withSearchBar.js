@@ -12,22 +12,19 @@ const SearchBox = styled.div`
   padding: 1rem 2rem;
   display: grid;
   flex-flow: row nowrap;
-  grid-template: "logo search" auto / 20% 80%;
+  grid-template: "search" auto / 100%;
   align-items: center;
 `;
 
 const SearchArea = styled.div`
-  grid-area: search;
+  grid-area: 
 `;
 
-const LogoArea = styled.div`
-  grid-area: logo;
-`;
 
 const SearchForm = styled.form`
-  border: 2px solid #3f51b5;
-  border-radius: 25px;
-  border-color: #707070;
+  border: 2px solid #333;
+  border-radius: 4px;
+  border-color: #999;
   height: 50px;
   display: grid;
   grid-template-columns: 1fr auto;
@@ -36,8 +33,8 @@ const SearchForm = styled.form`
   & > button {
     align-self: stretch;
     width: 150px;
-    background-color: #32a8b3;
-    border-radius: 25px;
+    background-color: #111;
+    border-radius: 4px;
   }
   & > div {
     padding-left: 1rem;
@@ -49,36 +46,33 @@ function withSearchBar<C: ComponentType<any>>(WrapComponent: C) {
     const [search, setSearch] = useState("");
     return (
       <>
-        <SearchBox>
-          <LogoArea>
-            <img src="./nothing.png" alt="logo" />
-          </LogoArea>
-          <SearchArea>
-            <SearchForm
-              method="POST"
-              onSubmit={(e) => {
-                e.preventDefault();
-                navigate(`/search/${search}`);
-              }}
-            >
-              <InputBase
-                placeholder="Search tutors by subject..."
-                onChange={(e) => setSearch(e.target.value)}
-                inputProps={{ "aria-label": "search" }}
-              />
-              <Button
-                type="submit"
-                startIcon={<SearchIcon />}
-                color="primary"
-                variant="contained"
-              >
-                Search
+    <SearchBox>
+      <SearchArea>
+        <SearchForm
+          method="POST"
+          onSubmit={(e) => {
+            e.preventDefault();
+            navigate(`/subjects/teachers/${search}`);
+          }}
+        >
+          <InputBase
+            placeholder="Search tutors by subject..."
+            onChange={(e) => setSearch(e.target.value)}
+            inputProps={{ "aria-label": "search" }}
+          />
+          <Button
+            type="submit"
+            startIcon={<SearchIcon />}
+            color="primary"
+            variant="contained"
+          >
+            Search
               </Button>
-            </SearchForm>
-          </SearchArea>
-        </SearchBox>
-        <WrapComponent {...props} />
-      </>
+        </SearchForm>
+      </SearchArea>
+    </SearchBox>
+    <WrapComponent {...props} />
+  </>
     );
   };
 }

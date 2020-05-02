@@ -58,7 +58,7 @@ namespace edusent_service.Controllers
                 teachers.Add(new TeacherOverviewViewModel
                 {
                     FullName = teacher.FirstName + " " + teacher.LastName,
-                    Rating = teacher.Rating,
+                    Rating = teacher.Rating.ToString() + " STARS",
                     Subjects = Repo.GetSubjectsById(item.UserId),
                     UserId = teacher.Id
                 });

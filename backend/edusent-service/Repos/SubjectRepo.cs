@@ -34,10 +34,11 @@ namespace edusent_service.Repos
 
             foreach(Subject item in data )
             {
-                result += item.Name + " ";
+                result += item.Name + ", ";
             }
 
-            return result;
+
+            return result.Substring(0, result.Length-2);
         }
     }
 }
