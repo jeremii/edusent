@@ -18,11 +18,12 @@ const StyledCard = styled(Card)`
   display: grid;
   grid-template:
     "about" 100%;
-  width: 400px;
+  width: 260px;
   grid-gap: 0rem;
   padding: 1rem;
   overflow: visible !important;
   margin: 0.1rem;
+  border: 2px solid #CCC;
 
   & img {
     width: 100%;
@@ -59,7 +60,7 @@ const TeacherCard = ({
     <Grid item>
       {/* //$FlowFixMe */}
       <Link to={`/users/${id}`} style={{ textDecoration: "none" }}>
-        <StyledCard raised>
+        <StyledCard>
           <div style={{ gridArea: "about" }}>
             <font color="gray"><strong>TEACHER</strong></font>
             <Typography variant="h4"><font color="#096">{fullName}</font></Typography>

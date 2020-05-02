@@ -29,13 +29,11 @@ const SearchTeachers = ({ term }: Props) => {
   return (
     <SiteMargin>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={9}>
-          <Grid container spacing={3}>
-            {teachers &&
-              teachers.map((item) => (
-                <TeacherCard teacher={item} key={item.UserId} />
-              ))}
-          </Grid>
+        <Grid container spacing={3}>
+          {teachers &&
+            teachers.map((item) => (
+              <TeacherCard teacher={item} key={item.UserId} />
+            ))}
         </Grid>
       </Grid>
     </SiteMargin>
