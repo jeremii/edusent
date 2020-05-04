@@ -47,7 +47,7 @@ const StyledCard = styled(Card)`
 // `
 
 const SessionCard = ({
-  session: { status, duration, start, day = new Date(start) },
+  session: { duration, start, day = new Date(start) },
 }: Props) => (
     <Grid item>
       {/* //$FlowFixMe */}
